@@ -34,7 +34,7 @@ while IFS= read -r parametro; do
   if [ "$salida" != "$resultado_esperado" ]; then
     #echo "Error: El resultado del comando para el parámetro '$parametro' no coincide."
     valid=false
-    echo $ntest ":" $parametro >>../error.txt
+    echo $ntest ":" $parametro >>../../error.txt
   fi
   
   # Actualiza la línea actual para la siguiente comparación
