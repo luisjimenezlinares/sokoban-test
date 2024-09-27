@@ -3,6 +3,8 @@ dirtest=1 # Cambiar este valor al número de la carpeta de test
 finput=test$dirtest/input.txt
 foutput=test$dirtest/salida.txt
 pathbin=bin # Cambiar este valor si la carpeta de ejecutables es distinta
+patherror=.. # Cambiar este valor si la carpeta de errores es distinta
+numlineas=8  # Cambiar este valor al número correcto de líneas de salida para el comando
 
 
 # Verifica si los archivos de entrada y resultado existen
@@ -11,8 +13,12 @@ if [ ! -f $finput ] || [ ! -f $foutput ]; then
   exit 1
 fi
 
-# Número de líneas de salida del comando
-numlineas=8  # Cambiar este valor al número correcto de líneas de salida
+# Si hay un fichero de errores anterior se borrar
+if [ -f $patherror/error_$dirtest.txt ]; then
+  rm $patherror/error_$dirtest.txt
+fi
+
+
 
 # Variables para controlar la posición en resultado.txt
 linea_actual=1
@@ -33,11 +39,11 @@ while IFS= read -r parametro; do
   if [ "$salida" != "$resultado_esperado" ]; then
     #echo "Error: El resultado del comando para el parámetro '$parametro' no coincide."
     valid=false
-    echo $ntest ":" $parametro >>error_$dirtest.txt
-    echo "salida:" >>error_$dirtest.txt
-    echo $salida >>error_$dirtest.txt
-    echo "resultado" >>error_$dirtest.txt
-    echo $resultado_esperado >>error_$dirtest.txt
+    echo $ntest ":" $parametro >>$patherror/error_$dirtest.txt
+    echo "salida:" >>$patherror/error_$dirtest.txt
+    echo $salida >>$patherror/error_$dirtest.txt
+    echo "resultado" >>$patherror/error_$dirtest.txt
+    echo $resultado_esperado >>$patherror/error_$dirtest.txt
   fi
   
   # Actualiza la línea actual para la siguiente comparación
