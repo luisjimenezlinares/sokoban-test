@@ -5,6 +5,7 @@ foutput=test$dirtest/salida.txt
 pathbin=bin # Cambiar este valor si la carpeta de ejecutables es distinta
 patherror=.. # Cambiar este valor si la carpeta de errores es distinta
 numlineas=8  # Cambiar este valor al número correcto de líneas de salida para el comando
+command=validate
 
 
 # Verifica si los archivos de entrada y resultado existen
@@ -28,7 +29,7 @@ ntest=1
 # Itera sobre cada línea de input.txt
 while IFS= read -r parametro; do
   # Ejecuta el comando con el parámetro actual
-  salida=$($pathbin/sokoban validate -l "$parametro" 2>&1)
+  salida=$($pathbin/sokoban $command -l "$parametro" 2>&1)
   
   # Extrae las líneas correspondientes de resultado.txt
   resultado_esperado=$(sed -n "${linea_actual},$(($linea_actual + $numlineas - 1))p" $foutput)
