@@ -58,12 +58,12 @@ nentradas=${#array_in[@]}
 i=0
 for linea in "${array_in[@]}";do
 
-    ejecuta="$comando $linea"
-./sokoban $ejecuta
-    salida=$(./sokoban $ejecuta 2>&1)
+
+    salida=$(./sokoban $comando "$linea" 2>&1)
+    salida+=$'\n'
     
     if ! diff <(echo "$salida") <(echo "${array_out[$i]}") > /dev/null; then
-        echo "$nfail: ./sokoban $ejecuta" >>"$archivo_error"
+        echo "$nfail: ./sokoban $comando $linea" >>"$archivo_error"
         echo "Tu salida:" >>"$archivo_error"
         echo "$salida" >>"$archivo_error"
         echo "Salida correcta:" >>"$archivo_error"

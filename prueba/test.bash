@@ -1,6 +1,9 @@
 #!/bin/bash
 
-archivo=niveles3.txt
+accion=$1
+archivo_in=$2
+archivo_out=$3
+
 tl=7
 
 nl=0
@@ -8,6 +11,6 @@ nl=0
 while IFS= read -r parametro; do
   #salida=$(./sokoban validate -l "$parametro" 2>&1)
   #echo $salida>>salida2.txt
-    ./sokoban validate -l "$parametro" 2>>salida3.txt
-done < "$archivo"
+    ./sokoban $accion  "$parametro" 2>>"$archivo_out"
+done < "$archivo_in"
 
