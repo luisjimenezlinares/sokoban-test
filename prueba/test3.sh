@@ -57,7 +57,9 @@ if [ ! -d "$carpeta" ]; then
   echo "Error: La carpeta '$carpeta' no existe."
   exit 1
 fi
+
 # Nos situamos en la carpeta del ejecutable
+cd "$carpeta"
 
 # Construimos el programa para ejecutar el programa
 # en función del lenguaje de programación
