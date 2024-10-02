@@ -5,6 +5,7 @@ comando=$1
 archivo_in=$2
 archivo_out=$3
 archivo_error=$4
+archivo_config="config_test.txt"
 array_in=()
 array_out=()
 
@@ -31,6 +32,59 @@ if [ ! -f "$archivo_out" ]; then
   exit 1
 fi
 
+# Eliminamos el fichero de error si existe
+if [  -f "$archivo_error" ]; then
+  rm "$archivo_error"
+fi
+
+# Identificamos lenguaje de programación y carpeta del ejecutable
+if [ ! -f "$archivo_config" ] then
+  echo "Error: El archivo de configuración no existe."
+  exit 1
+fi
+
+# Leemos el archivo de configuración
+# Primera línea: lenguaje de programación [C#|PYTHON|JAVA|C++|GO]
+# la leemos con sed y la guardamos en la variable lenguaje
+lenguaje=$(sed -n '1p' "$archivo_config")
+
+# Segunda línea: carpeta del ejecutable
+# la leemos con sed y la guardamos en la variable carpeta
+carpeta=$(sed -n '2p' "$archivo_config")
+
+# Comprobamos que la carpeta del ejecutable exista
+if [ ! -d "$carpeta" ]; then
+  echo "Error: La carpeta '$carpeta' no existe."
+  exit 1
+fi
+# Nos situamos en la carpeta del ejecutable
+
+# Construimos el programa para ejecutar el programa
+# en función del lenguaje de programación
+case $lenguaje in
+  C#)
+    programa="./sokoban.exe"
+    ;;
+  PYTHON)
+    programa="python3 ./sokoban.py"
+    ;;
+  JAVA)
+    programa="java -jar ./sokoban.jar"
+    ;;
+  C++)
+    programa="./sokoban"
+    ;;
+  GO)
+    programa="./sokoban"
+    ;;
+  *)
+    echo "Error: Lenguaje de programación no soportado."
+    exit 1
+    ;;
+esac
+
+
+
 # Leemos el archivo de salida en un array
 bloque=""
 while IFS= read -r linea; do
@@ -50,8 +104,6 @@ fi
 # Inicializar contador de fallos
 nfail=0
 
-# Crear o limpiar el archivo de error
-> "$archivo_error"
 
 # Comprobamos entradas y salidas
 nentradas=${#array_in[@]}
@@ -59,7 +111,7 @@ i=0
 for linea in "${array_in[@]}";do
 
 
-    salida=$(./sokoban $comando "$linea" 2>&1)
+    salida=$("$programa" "$comando" "$linea" 2>&1)
     salida+=$'\n'
     
     if ! diff <(echo "$salida") <(echo "${array_out[$i]}") > /dev/null; then
