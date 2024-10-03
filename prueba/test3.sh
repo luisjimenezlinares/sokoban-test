@@ -9,6 +9,8 @@ archivo_config="configure_test.txt"
 array_in=()
 array_out=()
 
+PATH_LOCAL=$(pwd)
+
 # Verifica si se proporcionan los parámetros de entrada correctos
 if [ $# -ne 4 ]; then
   echo "Uso: $0 <comando> <archivo_entrada> <archivo_salida> <archivo_error>"
@@ -96,7 +98,7 @@ while IFS= read -r linea; do
   else
     bloque+="$linea"$'\n'
   fi
-done < "$archivo_out"
+done < "$PATH_LOCAL"/"$archivo_out"
 
 # Procesar el último bloque si no termina en línea vacía
 if [ -n "$bloque" ]; then
