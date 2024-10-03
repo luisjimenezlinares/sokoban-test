@@ -129,6 +129,14 @@ for linea in "${array_in[@]}";do
     ((i++))
 done
 
+# Si hay fallos añadimos al repositorio el fichero de error
+# y lo sincronizamos con el repositorio remoto
+if [ $nfail -gt 0 ]; then
+  cmd PATH_LOCAL
+  git add "$archivo_error"
+  git commit -m "Añadir fichero de error"
+  git push
+fi
 # Mostrar el número de fallos
 echo "$nfail"
 
