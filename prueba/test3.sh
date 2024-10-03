@@ -38,7 +38,7 @@ if [  -f "$archivo_error" ]; then
 fi
 
 # Identificamos lenguaje de programación y carpeta del ejecutable
-if [ ! -f "$archivo_config" ] then
+if [ ! -f "$archivo_config" ]; then
   echo "Error: El archivo de configuración no existe."
   exit 1
 fi
