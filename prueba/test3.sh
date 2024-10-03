@@ -131,14 +131,15 @@ done
 
 # Si hay fallos añadimos al repositorio el fichero de error
 # y lo sincronizamos con el repositorio remoto
-# if [ $nfail -gt 0 ]; then
-#   cd $PATH_LOCAL
-#   git config --global user.email  luis.jimenez@uclm.es > /dev/null
-#   git config --global user.name luisjimenezlinaresL > /dev/null
-#   git add "$archivo_error" > /dev/null
-#   git commit -m "Añadir fichero de error" > /dev/null
-#   git push origin main > /dev/null
-# fi
+if [ $nfail -gt 0 ]; then
+  cd $PATH_LOCAL
+  sudo apt update
+  sudo apt install gh -y
+  gh auth login --with-token < ${{ secrets.GITHUB_TOKEN }}
+  git add "$archivo_error" > /dev/null
+  git commit -m "Añadir fichero de error" > /dev/null
+  git push origin main > /dev/null
+ fi
 # Mostrar el número de fallos
 echo "$nfail"
 
