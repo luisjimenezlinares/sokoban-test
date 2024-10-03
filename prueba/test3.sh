@@ -4,7 +4,7 @@
 comando=$1
 archivo_in=$2
 archivo_out=$3
-archivo_error=$4
+archivo_error=$(pwd)/$4
 archivo_config="configure_test.txt"
 array_in=()
 array_out=()
