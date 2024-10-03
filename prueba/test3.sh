@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Asignación de variables
+# Asignación de variables de entrada a variables locales
 comando=$1
 archivo_in=$2
 archivo_out=$3
 archivo_error=$4
-archivo_config="config_test.txt"
+archivo_config="configure_test.txt"
 array_in=()
 array_out=()
 
