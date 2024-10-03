@@ -133,7 +133,6 @@ done
 # y lo sincronizamos con el repositorio remoto
 if [ $nfail -gt 0 ]; then
   cd $PATH_LOCAL
-  echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
   git add "$archivo_error" > /dev/null
   git commit -m "Añadir fichero de error" > /dev/null
   git push origin main > /dev/null
