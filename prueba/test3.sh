@@ -132,7 +132,7 @@ done
 # Si hay fallos añadimos al repositorio el fichero de error
 # y lo sincronizamos con el repositorio remoto
 if [ $nfail -gt 0 ]; then
-  cd PATH_LOCA
+  cd $PATH_LOCAL
   git config --global user.email  luis.jimenez@uclm.es > /dev/null
   git config --global user.name luisjimenezlinaresL > /dev/null
   git add "$archivo_error" > /dev/null
