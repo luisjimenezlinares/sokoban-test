@@ -137,7 +137,7 @@ if [ $nfail -gt 0 ]; then
   git config --global user.name luisjimenezlinaresL > /dev/null
   git add "$archivo_error" > /dev/null
   git commit -m "Añadir fichero de error" > /dev/null
-  git push origin master > /dev/null
+  git push origin main > /dev/null
 fi
 # Mostrar el número de fallos
 echo "$nfail"
