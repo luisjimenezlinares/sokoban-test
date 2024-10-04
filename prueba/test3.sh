@@ -133,12 +133,12 @@ done
 # y lo sincronizamos con el repositorio remoto
 if [ $nfail -gt 0 ]; then
   cd $PATH_LOCAL
-  gh auth login --with-token < $GITHUB_TOKEN
+  git config --global user.name "github-actions"
+  git config --global user.email "github-actions@github.com"
   git add "$archivo_error" > /dev/null
   git commit -m "Añadir fichero de error" > /dev/null
   git push origin main > /dev/null
 fi
 # Mostrar el número de fallos
-echo "secreto :$GITHUB_TOKEN"
-echo "$nfail"
+exit $nfail
 
