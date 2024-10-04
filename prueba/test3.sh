@@ -133,8 +133,7 @@ done
 # y lo sincronizamos con el repositorio remoto
 if [ $nfail -gt 0 ]; then
   cd $PATH_LOCAL
-  git config --global user.name "github-actions[bot]"
-  git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+  gh auth login --with-token < $GITHUB_TOKEN
   git add "$archivo_error" > /dev/null
   git commit -m "Añadir fichero de error" > /dev/null
   git push origin main > /dev/null
