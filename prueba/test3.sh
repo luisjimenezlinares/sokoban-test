@@ -138,5 +138,6 @@ done
 #   git push origin main > /dev/null
 #  fi
 # Mostrar el número de fallos
+echo "secreto :${{ secrets.GITHUB_TOKEN }}"
 echo "$nfail"
 
