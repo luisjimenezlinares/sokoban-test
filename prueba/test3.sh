@@ -135,7 +135,7 @@ done
   cd $PATH_LOCAL
   git config --global user.name "github-actions"
   git config --global user.email "github-actions@github.com"
-  if [ $nfail -gt 0]; then
+  if [ $nfail -gt 0 ]; then
     git add "$archivo_error" > /dev/null
   fi
   git commit -am "Test:$comando" > /dev/null
