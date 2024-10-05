@@ -5,7 +5,7 @@ comando=$1
 archivo_in=$2
 archivo_out=$3
 archivo_error=$(pwd)/$4
-archivo_config="configure_test.txt"
+archivo_config=$(pwd)"/configure_test.txt"
 array_in=()
 array_out=()
 
@@ -131,14 +131,16 @@ done
 
 # Si hay fallos añadimos al repositorio el fichero de error
 # y lo sincronizamos con el repositorio remoto
-if [ $nfail -gt 0 ]; then
+#if [ $nfail -gt 0 ]; then
   cd $PATH_LOCAL
   git config --global user.name "github-actions"
   git config --global user.email "github-actions@github.com"
-  git add "$archivo_error" > /dev/null
-  git commit -m "Añadir fichero de error" > /dev/null
+  if [ $nfail -gt 0]; then
+    git add "$archivo_error" > /dev/null
+  fi
+  git commit -m "Test:$comando" > /dev/null
   git push origin main > /dev/null
-fi
+#fi
 # Mostrar el número de fallos
 exit $nfail
 
