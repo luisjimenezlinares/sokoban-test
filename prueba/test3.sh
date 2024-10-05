@@ -138,7 +138,7 @@ done
   if [ $nfail -gt 0]; then
     git add "$archivo_error" > /dev/null
   fi
-  git commit -m "Test:$comando" > /dev/null
+  git commit -am "Test:$comando" > /dev/null
   git push origin main > /dev/null
 #fi
 # Mostrar el número de fallos
