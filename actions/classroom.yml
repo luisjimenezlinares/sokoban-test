@@ -1,0 +1,41 @@
+name: Autograding Tests
+'on':
+- workflow_dispatch
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: T1
+      id: t1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: T1
+        setup-command: git clone https://github.com/luisjimenezlinares/sokoban-test.git
+        command: sokoban-test/prueba/test3.sh validate sokoban-test/prueba/n1.txt  sokoban-test/prueba/o1T1.txt
+          err1.txt
+        timeout: 10
+        max-score: 5
+    - name: T2
+      id: t2
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: T2
+        setup-command: ''
+        command: sokoban-test/prueba/test3.sh validate sokoban-test/prueba/n2.txt  sokoban-test/prueba/o2T1.txt  err2.txt
+        timeout: 10
+        max-score: 4
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        T1_RESULTS: "${{steps.t1.outputs.result}}"
+        T2_RESULTS: "${{steps.t2.outputs.result}}"
+      with:
+        runners: t1,t2
