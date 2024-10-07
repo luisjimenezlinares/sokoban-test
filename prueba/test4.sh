@@ -11,8 +11,8 @@ array_out=()
 PATH_LOCAL=$(pwd)
 
 # Verifica si se proporcionan los parámetros de entrada correctos
-if [ $# -ne 4 ]; then
-  echo "Uso: $0 <comando> <archivo_entrada> <archivo_salida> <archivo_error>"
+if [ $# -ne 3 ]; then
+  echo "Uso: $0 <comando> <archivo_entrada> <archivo_salida>"
   exit 1
 fi
 
