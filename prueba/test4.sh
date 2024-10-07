@@ -66,6 +66,11 @@ case $lenguaje in
     programa="./sokoban.exe"
     ;;
   PYTHON)
+    # Verificamos si existe el archivo requirements.txt
+    if [ -f "requirements.txt" ]; then
+      echo "Instalando dependencias desde requirements.txt..."
+      pip install -r requirements.txt
+    fi
     programa="python3 ./sokoban.py"
     ;;
   JAVA)
