@@ -4,7 +4,6 @@
 comando=$1
 archivo_in=$2
 archivo_out=$3
-archivo_error=$(pwd)/$4
 archivo_config=$(pwd)"/configure_test.txt"
 array_in=()
 array_out=()
@@ -34,10 +33,7 @@ if [ ! -f "$archivo_out" ]; then
   exit 1
 fi
 
-# Eliminamos el fichero de error si existe
-if [  -f "$archivo_error" ]; then
-  rm "$archivo_error"
-fi
+
 
 # Identificamos lenguaje de programación y carpeta del ejecutable
 if [ ! -f "$archivo_config" ]; then
@@ -119,28 +115,15 @@ for linea in "${array_in[@]}";do
     salida+=$'\n'
     
     if ! diff <(echo "$salida") <(echo "${array_out[$i]}") > /dev/null; then
-        echo "$nfail: ./sokoban $comando $linea" >>"$archivo_error"
-        echo "Tu salida:" >>"$archivo_error"
-        echo "$salida" >>"$archivo_error"
-        echo "Salida correcta:" >>"$archivo_error"
-        echo "${array_out[$i]}" >>"$archivo_error"
+        echo "$nfail: ./sokoban $comando $linea"
+        echo "Tu salida:"
+        echo "$salida"
+        echo "Salida correcta:"
+        echo "${array_out[$i]}"
         ((nfail++))
     fi
     ((i++))
 done
-
-# Si hay fallos añadimos al repositorio el fichero de error
-# y lo sincronizamos con el repositorio remoto
-#if [ $nfail -gt 0 ]; then
-  cd $PATH_LOCAL
-  git config --global user.name "github-actions"
-  git config --global user.email "github-actions@github.com"
-  if [ $nfail -gt 0 ]; then
-    git add "$archivo_error" > /dev/null
-  fi
-  git commit -am "Test:$comando" > /dev/null
-  git push origin main > /dev/null
-#fi
-# Mostrar el número de fallos
+echo "Número de fallos: $nfail"
 exit $nfail
 
