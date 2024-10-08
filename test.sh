@@ -120,7 +120,7 @@ for linea in "${array_in[@]}";do
     salida+=$'\n'
     
     if ! diff <(echo "$salida") <(echo "${array_out[$i]}") > /dev/null; then
-        echo "$nfail: ./sokoban $comando $linea"
+        echo "$nfail: $programa $comando $linea"
         echo "Tu salida:"
         echo "$salida"
         echo "Salida correcta:"
