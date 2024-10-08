@@ -116,7 +116,7 @@ i=0
 for linea in "${array_in[@]}";do
 
 
-    salida=$("$programa" "$comando" "$linea" 2>&1)
+    salida=$($programa $comando $linea 2>&1)
     salida+=$'\n'
     
     if ! diff <(echo "$salida") <(echo "${array_out[$i]}") > /dev/null; then
