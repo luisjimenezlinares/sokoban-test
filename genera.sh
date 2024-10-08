@@ -1,8 +1,9 @@
 #!/bin/bash
 
-accion=$1
-archivo_in=$2
-archivo_out=$3
+prog=$1
+accion=$2
+archivo_in=$3
+archivo_out=$4
 
 tl=7
 
@@ -14,8 +15,6 @@ if [  -f "$archivo_out" ]; then
   rm $archivo_out
 fi
 while IFS= read -r parametro; do
-  #salida=$(./sokoban validate -l "$parametro" 2>&1)
-  #echo $salida>>salida2.txt
-    ./sokoban $accion  "$parametro" 2>>"$archivo_out"
+    eval $prog $accion  "$parametro" 2>>"$archivo_out"
 done < "$archivo_in"
 
