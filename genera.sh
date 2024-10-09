@@ -15,6 +15,6 @@ if [  -f "$archivo_out" ]; then
   rm $archivo_out
 fi
 while IFS= read -r parametro; do
-    eval $prog $accion  "$parametro" 2>>"$archivo_out"
+    eval $prog $accion  "$parametro" >>"$archivo_out"
 done < "$archivo_in"
 
