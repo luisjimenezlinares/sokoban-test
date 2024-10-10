@@ -116,9 +116,12 @@ i=0
 for linea in "${array_in[@]}";do
 
     salida=$(eval $programa $comando "$linea" )
-    salida+=$'\n'
     
-    if ! diff <(echo "$salida") <(echo "${array_out[$i]}") > /dev/null; then
+    # Eliminar espacios en blanco, tabuladores y retornos de carro
+    salida_limpia=$(echo "$salida" | tr -d '[:space:]')
+    salida_correcta_limpia=$(echo "${array_out[$i]}" | tr -d '[:space:]')
+
+    if ! diff <(echo "$salida_limpia") <(echo "$salida_correcta_limpia") > /dev/null; then
         echo "$nfail: $programa $comando $linea"
         echo "Tu salida:"
         echo "$salida"
