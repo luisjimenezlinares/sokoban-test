@@ -124,9 +124,9 @@ for linea in "${array_in[@]}";do
     if ! diff <(echo "$salida_limpia") <(echo "$salida_correcta_limpia") > /dev/null; then
         echo "$nfail: $programa $comando $linea"
         echo "Tu salida:"
-        echo "$salida"
+        echo "$salida_limpia"
         echo "Salida correcta:"
-        echo "${array_out[$i]}"
+        echo "$salida_correcta_limpia"
         ((nfail++))
     fi
     ((i++))
