@@ -79,7 +79,7 @@ case $lenguaje in
       touch INSTALLEDJAVA
       wget download.oracle.com/java/23/latest/jdk-23_linux-x64_bin.deb > /dev/null
       sudo dpkg -i jdk-23_linux-x64_bin.deb
-      sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-23/bin/java 1
+      sudo update-alternatives --install /usr/bin/java java /usr/lib/jvm/jdk-23.0.1-oracle-x64/bin/java 1
       java --version
     fi
     ;;
