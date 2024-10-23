@@ -77,7 +77,8 @@ case $lenguaje in
     programa="java -jar ./sokoban.jar"
     if [ ! -f INSTALLEDJAVA ]; then
       touch INSTALLEDJAVA
-      sudo apt-get install -y openjdk-21-jdk > /dev/null
+      wget download.oracle.com/java/23/latest/jdk-23_linux-x64_bin.deb > /dev/null
+      dpkg -i jdk-23_linux-x64_bin.deb > /dev/null
     fi
     ;;
   C++)
