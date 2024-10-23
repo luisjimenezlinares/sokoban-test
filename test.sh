@@ -77,14 +77,15 @@ case $lenguaje in
     programa="java --enable-preview -jar ./sokoban.jar"
     if [ ! -f INSTALLEDJAVA ]; then
       touch INSTALLEDJAVA
-      #wget download.oracle.com/java/23/latest/jdk-23_linux-x64_bin.deb > /dev/null
-      #sudo dpkg -i jdk-23_linux-x64_bin.deb
-      #sudo update-alternatives --set java /usr/lib/jvm/jdk-23.0.1-oracle-x64/bin/java
-      #java --version
-      sudo apt-get install openjdk-21-jdk > /dev/null
-      sudo update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java
-      sudo update-alternatives --set javac /usr/lib/jvm/java-21-openjdk-amd64/bin/javac
+      wget download.oracle.com/java/23/latest/jdk-23_linux-x64_bin.deb > /dev/null
+      sudo dpkg -i jdk-23_linux-x64_bin.deb
+      sudo update-alternatives --set java /usr/lib/jvm/jdk-23.0.1-oracle-x64/bin/java
+      sudo update-alternatives --set javac /usr/lib/jvm/jdk-23.0.1-oracle-x64/bin/javac
       java --version
+      # sudo apt-get install openjdk-21-jdk > /dev/null
+      # sudo update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java
+      # sudo update-alternatives --set javac /usr/lib/jvm/java-21-openjdk-amd64/bin/javac
+      # java --version
     fi
     ;;
   C++)
