@@ -78,7 +78,7 @@ case $lenguaje in
     if [ ! -f INSTALLEDJAVA ]; then
       touch INSTALLEDJAVA
       wget download.oracle.com/java/23/latest/jdk-23_linux-x64_bin.deb > /dev/null
-      dpkg -i jdk-23_linux-x64_bin.deb > /dev/null
+      sudo dpkg -i jdk-23_linux-x64_bin.deb > /dev/null
     fi
     ;;
   C++)
