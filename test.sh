@@ -63,7 +63,7 @@ cd "$carpeta"
 # en función del lenguaje de programación
 case $lenguaje in
   C#)
-    programa="./sokoban.exe"
+    programa="./sokoban"
     ;;
   PYTHON)
     # Verificamos si existe el archivo requirements.txt
@@ -75,6 +75,10 @@ case $lenguaje in
     ;;
   JAVA)
     programa="java -jar ./sokoban.jar"
+    if [ ! -f INSTALLEDJAVA ]; then
+      touch INSTALLEDJAVA
+      sudo apt-get install -y openjdk-21-jdk > /dev/null
+    fi
     ;;
   C++)
     programa="./sokoban"
