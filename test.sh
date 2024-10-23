@@ -74,7 +74,7 @@ case $lenguaje in
     programa="python3 ./sokoban.py"
     ;;
   JAVA)
-    programa="java -jar ./sokoban.jar"
+    programa="java --enable-preview -jar ./sokoban.jar"
     if [ ! -f INSTALLEDJAVA ]; then
       touch INSTALLEDJAVA
       wget download.oracle.com/java/23/latest/jdk-23_linux-x64_bin.deb > /dev/null
