@@ -82,6 +82,8 @@ case $lenguaje in
       #sudo update-alternatives --set java /usr/lib/jvm/jdk-23.0.1-oracle-x64/bin/java
       #java --version
       sudo apt-get install openjdk-21-jdk > /dev/null
+      sudo update-alternatives --set java /usr/lib/jvm/java-21-openjdk-amd64/bin/java
+      sudo update-alternatives --set javac /usr/lib/jvm/java-21-openjdk-amd64/bin/javac
       java --version
     fi
     ;;
