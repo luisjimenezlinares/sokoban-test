@@ -96,7 +96,7 @@ case $lenguaje in
     programa="./sokoban"
     ;;
   *)
-    echo "Error: Lenguaje de programación no soportado."
+    echo "Error["$lenguaje"]: Lenguaje de programación no soportado."
     exit 1
     ;;
 esac
