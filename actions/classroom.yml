@@ -1,0 +1,70 @@
+name: Autograding Tests
+'on':
+- workflow_dispatch
+#- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: T1
+      id: t1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: T1
+        setup-command: git clone https://github.com/luisjimenezlinares/sokoban-test.git
+        command: sokoban-test/test.sh T1 sokoban-test/n2.txt sokoban-test/o2T1.txt
+        timeout: 4
+        max-score: 1
+    - name: T2S
+      id: t2s
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: T2S
+        setup-command: ''
+        command: "./sokoban-test/test.sh  T2S ./sokoban-test/n2.txt ./sokoban-test/o2T2S.txt"
+        timeout: 10
+        max-score: 1
+    - name: T2T
+      id: t2t
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: T2T
+        setup-command: ''
+        command: "./sokoban-test/test.sh  T2T ./sokoban-test/n3.txt ./sokoban-test/o3T2T.txt"
+        timeout: 10
+        max-score: 1
+    - name: T3
+      id: t3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: T3
+        setup-command: ''
+        command: "./sokoban-test/test.sh  T3 ./sokoban-test/n4.txt ./sokoban-test/o4T3.txt"
+        timeout: 10
+        max-score: 1
+    - name: T4
+      id: t4
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: T4
+        setup-command: ''
+        command: "./sokoban-test/test.sh  T3 ./sokoban-test/n5.txt ./sokoban-test/o5T4.txt"
+        timeout: 5
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        T1_RESULTS: "${{steps.t1.outputs.result}}"
+        T2S_RESULTS: "${{steps.t2s.outputs.result}}"
+        T2T_RESULTS: "${{steps.t2t.outputs.result}}"
+        T3_RESULTS: "${{steps.t3.outputs.result}}"
+        T4_RESULTS: "${{steps.t4.outputs.result}}"
+      with:
+        runners: t1,t2s,t2t,t3,t4

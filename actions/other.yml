@@ -1,0 +1,92 @@
+name: Autograding Tests
+'on':
+- workflow_dispatch
+#- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: C1
+      id: c1
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: C1
+        setup-command: git clone https://github.com/luisjimenezlinares/sokoban-test.git
+        command: sokoban-test/test.sh T3 sokoban-test/c1.txt sokoban-test/r1.txt
+        timeout: 5
+        max-score: 1
+    - name: C2
+      id: c2
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: c2
+        setup-command: ''
+        command: "sokoban-test/test.sh T3 sokoban-test/c2.txt sokoban-test/r2.txt"
+        timeout: 5
+        max-score: 1
+
+      - name: C3
+      id: c3
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: c3
+        setup-command: ''
+        command: "sokoban-test/test.sh T3 sokoban-test/c3.txt sokoban-test/r3.txt"
+        timeout: 5
+        max-score: 1
+
+    - name: C4
+      id: c4
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: c4
+        setup-command: ''
+        command: "sokoban-test/test.sh T3 sokoban-test/c4.txt sokoban-test/r4.txt"
+        timeout: 5
+        max-score: 1
+    - name: C5
+      id: c5
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: c5
+        setup-command: ''
+        command: "sokoban-test/test.sh T3 sokoban-test/c5.txt sokoban-test/r5.txt"
+        timeout: 5
+        max-score: 1
+    - name: C6
+      id: c6
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: c6
+        setup-command: ''
+        command: "sokoban-test/test.sh T3 sokoban-test/c6.txt sokoban-test/r6.txt"
+        timeout: 5
+        max-score: 1
+    - name: C7
+      id: c7
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: c7
+        setup-command: ''
+        command: "sokoban-test/test.sh T3 sokoban-test/c7.txt sokoban-test/r7.txt"
+        timeout: 5
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        C1_RESULTS: "${{steps.c1.outputs.result}}"
+        C2_RESULTS: "${{steps.c2.outputs.result}}"
+        C3_RESULTS: "${{steps.c3.outputs.result}}"
+        C4_RESULTS: "${{steps.c4.outputs.result}}"
+        C5_RESULTS: "${{steps.c5.outputs.result}}"
+        C6_RESULTS: "${{steps.c6.outputs.result}}"
+        C7_RESULTS: "${{steps.c7.outputs.result}}"
+      with:
+        runners: c1,c2,c3,c4,c5,c6,c7
