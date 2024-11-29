@@ -1,0 +1,10 @@
+#!/bin/bash
+#Sobre q
+repo=$1 #repo sobre el que se va a ejecutar la acción
+action=$2 #acción a ejecutar en el repo con  path absoluto
+cd $repo #nos movemos al repo
+#ejecutamos la acción
+salida=$(gh act -W $action)
+#Buscamos el resultado en la salida
+
+
