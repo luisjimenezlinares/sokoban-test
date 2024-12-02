@@ -1,14 +1,19 @@
 #!/bin/bash
 
 # Verifica que se hayan pasado dos parámetros
-if [ $# -ne 2 ]; then
-    echo "Uso: $0 <archivo.yml> <repositorio_git>"
+if [ $# -ne 3 ]; then
+    echo "Uso: $0 <archivo.yml>  <archivo.csv> <repositorio_git>"
     exit 1
 fi
 
 # Parámetros
 archivo=$1
-repositorio=$2
+csv_output=$2
+repositorio=$3
+temppath=$(pwd)"/tmp"
+
+mkdir temppath
+
 
 # Verifica que el archivo YAML exista
 if [ ! -f "$archivo" ]; then
@@ -17,8 +22,13 @@ if [ ! -f "$archivo" ]; then
 fi
 
 # Preparar un archivo CSV
-csv_output="resultados.csv"
-echo "Repositorio,Acción,Test Score,Max Score" > "$csv_output"
+# Comprobar si el archivo existe
+if [ ! -f "$csv_output" ]; then
+    echo "El archivo $archivo no existe. Creándolo vacío..."
+    echo "Repositorio,Acción,Test Score,Max Score" > "$csv_output"
+else
+    echo "El archivo $archivo ya existe."
+fi
 
 # Extraer los nombres de las acciones del archivo YAML, excluyendo la primera y última
 acciones=$(grep -Po '(?<=  id: ).*' "$archivo" | sed '1d' | sed '$d')
@@ -29,14 +39,9 @@ if [ -z "$acciones" ]; then
     exit 1
 fi
 
-# Clonar el repositorio dado
-#echo "Clonando el repositorio: $repositorio..."
-#temp_dir=$(mktemp -d)
-#git clone "$repositorio" "$temp_dir" || { echo "Error al clonar el repositorio."; exit 1; }
-#cd "$temp_dir" || { echo "Error al acceder al repositorio clonado."; exit 1; }
 
 cd $repositorio
-echo "CAmbio al repositorio:"$repositorio
+echo "Cambio al repositorio:"$repositorio
 
 # Ejecutar las acciones con gh act
 echo "Ejecutando acciones definidas en el archivo YAML..."
@@ -48,7 +53,7 @@ while read -r accion; do
     echo "Procesando resultados para acción: $accion..."
     # Buscar resultados para esta acción en la salida
     resultado=$(grep -E "│\s+$accion\s+\│\s+[0-9]+\s+\│\s+[0-9]+\s+\│" salida_act.log)
-    if [[ "$resultado" =~ ^\│\ ([A-Za-z0-9]+)\ +\│\ ([0-9]+)\ +\│\ ([0-9]+)\ +\│$ ]]; then
+    if [[ "$resultado" =~ \ +│\ ([A-Za-z0-9]+)\ +\│\ ([0-9]+)\ +\│\ ([0-9]+)\ +\│$ ]]; then
         accion="${BASH_REMATCH[1]}"
         test_score="${BASH_REMATCH[2]}"
         max_score="${BASH_REMATCH[3]}"
@@ -64,5 +69,5 @@ cat "$csv_output"
 
 # Limpieza
 echo "Limpiando el directorio temporal..."
-rm -rf "$temp_dir"
+mv salida_act.log temppath
 
