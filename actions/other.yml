@@ -12,6 +12,7 @@ jobs:
     if: github.actor != 'github-classroom[bot]'
     steps:
     - name: Checkout code
+      id: ckcode
       uses: actions/checkout@v4
     - name: C1
       id: c1
@@ -77,6 +78,7 @@ jobs:
         timeout: 5
         max-score: 1
     - name: Autograding Reporter
+      id: autoRe
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         C1_RESULTS: "${{steps.c1.outputs.result}}"
