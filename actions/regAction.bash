@@ -10,9 +10,9 @@ fi
 archivo=$1
 csv_output=$2
 repositorio=$3
-temppath=$(pwd)"/tmp"
+temppath=$(pwd)/tmp
 
-mkdir temppath
+mkdir $temppath
 
 
 # Verifica que el archivo YAML exista
@@ -69,5 +69,5 @@ cat "$csv_output"
 
 # Limpieza
 echo "Limpiando el directorio temporal..."
-mv salida_act.log temppath
+mv salida_act.log $temppath
 
